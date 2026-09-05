@@ -1,4 +1,4 @@
-package sample_team.module.complex;
+package io.donbee.kaku.rescue.module.complex;
 
 import static rescuecore2.standard.entities.StandardEntityURN.AMBULANCE_TEAM;
 import static rescuecore2.standard.entities.StandardEntityURN.CIVILIAN;

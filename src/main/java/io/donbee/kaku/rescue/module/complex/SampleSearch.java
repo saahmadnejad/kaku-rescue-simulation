@@ -1,4 +1,4 @@
-package sample_team.module.complex;
+package io.donbee.kaku.rescue.module.complex;
 
 import static rescuecore2.standard.entities.StandardEntityURN.AMBULANCE_CENTRE;
 import static rescuecore2.standard.entities.StandardEntityURN.AMBULANCE_TEAM;
@@ -96,13 +96,23 @@ public class SampleSearch extends Search {
     this.pathPlanning.setDestination(this.unsearchedBuildingIDs);
     List<EntityID> path = this.pathPlanning.calc().getResult();
     logger.debug("best path is: " + path);
-    if (path != null && path.size() > 2) {
-      this.result = path.get(path.size() - 3);
-    } else if (path != null && path.size() > 0) {
-      this.result = path.get(path.size() - 1);
-    }
+    this.result = targetFromPath(path);
     logger.debug("chose: " + result);
     return this;
+  }
+
+  /**
+   * Chooses the search target from a planned path: the node three steps
+   * before the end when the path is long, otherwise the last reachable node.
+   */
+  static EntityID targetFromPath(List<EntityID> path) {
+    if (path == null || path.isEmpty()) {
+      return null;
+    }
+    if (path.size() > 2) {
+      return path.get(path.size() - 3);
+    }
+    return path.get(path.size() - 1);
   }
 
 

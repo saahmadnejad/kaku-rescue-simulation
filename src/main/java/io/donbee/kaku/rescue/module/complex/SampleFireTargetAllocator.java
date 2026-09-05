@@ -1,4 +1,4 @@
-package sample_team.module.complex;
+package io.donbee.kaku.rescue.module.complex;
 
 import adf.core.agent.communication.MessageManager;
 import adf.core.agent.develop.DevelopData;

@@ -46,7 +46,47 @@ Options: `-t [FB],[FS],[PF],[PO],[AT],[AC]` agent counts, `-all` = all, `-h <hos
 
 Team code lives in `src/main/java/` (module implementations: path planning, target selection, clustering, communication). Framework module interfaces come from `adf-core-java` (Maven dependency). See `docs/adf-manual.adoc` for the ADF manual.
 
-## 5. Commit Convention — Conventional Commits
+## 5. Testing — Mandatory
+
+Every contribution MUST come with unit tests:
+
+- Framework: **JUnit 5** (`gradle test`)
+- Structure every test with **AAA** (Arrange, Act, Assert) and name it with the
+  **given / when / then** principle:
+  - Method name describes the scenario: `longPathReturnsThirdToLast()`
+  - Inside the test, mark the phases with `// given`, `// when`, `// then`
+- Test package mirrors main package: `src/test/java/io/donbee/kaku/rescue/...`
+- Pure logic goes into testable (static/package-private) methods; framework-bound
+  code gets config-consistency or contract tests.
+- A PR without tests for new/changed behaviour will not be merged.
+
+Example:
+
+```java
+@Test
+@DisplayName("long path returns node three steps before the end")
+void longPathReturnsThirdToLast() {
+    // given
+    List<EntityID> path = ids(1, 2, 3, 4, 5, 6, 7);
+
+    // when
+    EntityID target = SampleSearch.targetFromPath(path);
+
+    // then
+    assertEquals(new EntityID(5), target);
+}
+```
+
+## 6. Contribution Rules
+
+1. **Conventional Commits** (see section below) — no exceptions.
+2. **Tests for everything** — new behaviour, bug fixes, config changes.
+   `gradle test` must pass before every push.
+3. One logical change per commit; keep commits small and reviewable.
+4. Code style: follow the existing format (Google Java Style, 2-space indent).
+5. Package root for all team code: `io.donbee.kaku.rescue`.
+
+## 7. Commit Convention — Conventional Commits
 
 This project follows the [Conventional Commits](https://www.conventionalcommits.org/) standard. Every commit message MUST be structured as:
 
@@ -84,6 +124,6 @@ Rules:
 - Subject line: imperative mood, lowercase, no period, max ~72 chars
 - Scope is optional and names the affected module (e.g. `tactics`, `path`, `cluster`, `comms`)
 
-## 6. Support
+## 8. Support
 
 To report a bug or suggest improvements, open an issue on GitHub.
