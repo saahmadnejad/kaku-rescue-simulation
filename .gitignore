@@ -1,0 +1,33 @@
+# Java
+*.class
+bin
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea
+
+# Eclipse project
+.settings
+.project
+.classpath
+
+# Visual Studio Code
+.vscode
+
+# Theia IDE
+.theia
+
+# Gradle
+.gradle
+build
+
+# Logs
+*.log
+logs
+hs_err_pid*
+
+# RCRS precompute data
+precomp_data
+test-results
